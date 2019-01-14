@@ -43,7 +43,7 @@ class PagesProvider extends ServiceProvider
     private function addMenuRoutes()
     {
         $menu = [
-            'Pages' => 'laracms.pages'
+            'admin.menu.pages' => 'laracms.pages'
         ];
 
         MenuFacade::addMenu($menu);
