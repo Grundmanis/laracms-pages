@@ -3,10 +3,9 @@
 namespace Grundmanis\Laracms\Modules\Pages\Providers;
 
 use Grundmanis\Laracms\Modules\Pages\Exception\Handler;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use Grundmanis\Laracms\Facades\MenuFacade;
+use Grundmanis\Laracms\Modules\Dashboard\Facades\MenuFacade;
 
 class PagesProvider extends ServiceProvider
 {
@@ -17,6 +16,11 @@ class PagesProvider extends ServiceProvider
      */
     public function boot()
     {
+        App::singleton(
+            \App\Exceptions\Handler::class,
+            Handler::class
+        );
+
         $this->loadViewsFrom(__DIR__ . '/../views', 'laracms.pages');
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
         $this->loadRoutesFrom(__DIR__ . '/../laracms_pages_routes.php');

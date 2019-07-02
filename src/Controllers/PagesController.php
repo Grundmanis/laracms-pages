@@ -90,13 +90,4 @@ class PagesController extends Controller
         $page->delete();
         return redirect()->route('laracms.pages')->with('status', 'Page deleted!');
     }
-
-    public function show(string $url)
-    {
-        if ($page = LaracmsPage::where('url', $url)->first()) {
-            return response()->view('laracms.pages.index', compact('page'))->setStatusCode(200);
-        }
-
-        abort(404);
-    }
 }
