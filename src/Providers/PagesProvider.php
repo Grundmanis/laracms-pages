@@ -5,7 +5,6 @@ namespace Grundmanis\Laracms\Modules\Pages\Providers;
 use Grundmanis\Laracms\Modules\Pages\Exception\Handler;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use Grundmanis\Laracms\Modules\Dashboard\Facades\MenuFacade;
 
 class PagesProvider extends ServiceProvider
 {
@@ -16,6 +15,7 @@ class PagesProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Rewrites the default error handler
         App::singleton(
             \App\Exceptions\Handler::class,
             Handler::class
@@ -27,7 +27,7 @@ class PagesProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../views/pages/' => resource_path('views/laracms/pages/'),
-        ], 'laracms_pages');
+        ], 'laracms');
 
     }
 
@@ -38,19 +38,6 @@ class PagesProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->addMenuRoutes();
+        //
     }
-
-    /**
-     *
-     */
-    private function addMenuRoutes()
-    {
-        $menu = [
-            'admin.menu.pages' => 'laracms.pages'
-        ];
-
-        MenuFacade::addMenu($menu);
-    }
-
 }
