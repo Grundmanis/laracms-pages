@@ -4,6 +4,7 @@ namespace Grundmanis\Laracms\Modules\Pages\Exception;
 
 use Exception;
 use Grundmanis\Laracms\Modules\Pages\Models\LaracmsPage;
+use Grundmanis\Laracms\Modules\Pages\Models\LaracmsPageTranslation;
 
 class Handler extends \App\Exceptions\Handler {
 
@@ -12,9 +13,11 @@ class Handler extends \App\Exceptions\Handler {
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             $url = implode('/', $request->segments());
 
-            if ($page = LaracmsPage::where('url', $url)->first()) {
+            if ($translation = LaracmsPageTranslation::where('url', $url)->first()) {
+                $page = $translation->page;
+
                 return response()
-                    ->view('laracms.pages.index', compact('page'))
+                    ->view('laracms.pages.pages.index', compact('page'))
                     ->setStatusCode(200);
             }
         }

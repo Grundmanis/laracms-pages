@@ -8,8 +8,9 @@ class LaracmsPage extends Model
 {
     use \Dimsav\Translatable\Translatable;
 
-    public $translatedAttributes = ['text'];
-    protected $fillable = ['url', 'layout'];
+    public $translatedAttributes = ['text', 'url'];
+
+    protected $fillable = ['layout'];
 
     /**
      * LaracmsPage constructor.

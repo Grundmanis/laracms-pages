@@ -36,7 +36,9 @@ class PagesController extends Controller
      */
     public function index()
     {
-        return view('laracms.pages::index', [
+        $view = view()->exists('laracms.pages.index') ? 'laracms.pages.index' : 'laracms.pages::index';
+
+        return view($view, [
             'pages' => $this->page->paginate(10)
         ]);
     }
@@ -47,7 +49,9 @@ class PagesController extends Controller
     public function create()
     {
         $layouts = $this->layoutsLoader->load();
-        return view('laracms.pages::form', compact('layouts'));
+        $view = view()->exists('laracms.pages.form') ? 'laracms.pages.form' : 'laracms.pages::form';
+
+        return view($view, compact('layouts'));
     }
 
     /**
@@ -57,6 +61,7 @@ class PagesController extends Controller
     public function store(PageRequest $request)
     {
         $this->page->create($request->all());
+
         return redirect()->route('laracms.pages')->with('status', 'Page created!');
     }
 
@@ -67,8 +72,9 @@ class PagesController extends Controller
     public function edit(LaracmsPage $page)
     {
         $layouts = $this->layoutsLoader->load();
+        $view = view()->exists('laracms.pages.form') ? 'laracms.pages.form' : 'laracms.pages::form';
 
-        return view('laracms.pages::form', compact('page', 'layouts'));
+        return view($view, compact('page', 'layouts'));
     }
 
     /**
@@ -79,6 +85,7 @@ class PagesController extends Controller
     public function update(LaracmsPage $page, PageRequest $request)
     {
         $page->update($request->all());
+
         return back()->with('status', 'Page updated!');
     }
 
@@ -89,6 +96,7 @@ class PagesController extends Controller
     public function destroy(LaracmsPage $page)
     {
         $page->delete();
+
         return redirect()->route('laracms.pages')->with('status', 'Page deleted!');
     }
 }

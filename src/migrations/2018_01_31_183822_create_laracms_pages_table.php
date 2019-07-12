@@ -15,7 +15,6 @@ class CreateLaracmsPagesTable extends Migration
     {
         Schema::create('laracms_pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url')->unique();
             $table->string('layout');
             $table->timestamps();
         });
@@ -24,7 +23,8 @@ class CreateLaracmsPagesTable extends Migration
         {
             $table->increments('id');
             $table->integer('laracms_page_id')->unsigned();
-            $table->string('text');
+            $table->longText('text');
+            $table->string('url')->unique();
             $table->string('locale')->index();
 
             $table->unique(['laracms_page_id','locale']);

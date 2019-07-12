@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">{{ __('laracms::admin.text') }}</label>
-                                <textarea class="form-control" name="{{ $locale }}[text]">{{ formValue($page ?? null, 'value', $locale) }}</textarea>
+                                <textarea class="form-control" name="{{ $locale }}[text]">{{ formValue($page ?? null, 'text', $locale) }}</textarea>
                             </div>
                         </div>
                     @endforeach

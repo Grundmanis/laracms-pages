@@ -14,7 +14,7 @@ class LayoutsLoader {
      */
     public function load()
     {
-        $layoutsFolder = resource_path('views/laracms/pages/layouts');
+        $layoutsFolder = resource_path('views/laracms/pages/pages/layouts');
 
         if (!file_exists($layoutsFolder)) {
             dd('Path ' . $layoutsFolder . ' doesn\'t exists, please create it ot run the console command "php artisan laracms:configure"');

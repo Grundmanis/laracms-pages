@@ -25,13 +25,12 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'url' => 'required'
-        ];
+        $rules = [];
 
         foreach(\LocaleAlias::getLocales() as $locale)
         {
             $rules[$locale . '.text'] = 'required';
+            $rules[$locale . '.url'] = 'required';
         }
 
         return $rules;
@@ -43,6 +42,7 @@ class PageRequest extends FormRequest
         foreach(\LocaleAlias::getLocales() as $locale)
         {
             $fields[$locale . '.text'] = $locale .' text';
+            $fields[$locale . '.url'] = $locale .' url';
         }
 
         return $fields;

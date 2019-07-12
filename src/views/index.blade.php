@@ -13,47 +13,55 @@
                         <h4 class="card-title">{{ __('laracms::admin.laracms_users') }}</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="text-primary">
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ __('laracms::admin.url') }}</th>
-                                    <th>{{ __('laracms::admin.layout') }}</th>
-                                    <th>{{ __('laracms::admin.actions') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($pages as $sitePage)
+                        @if (count($pages))
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="text-primary">
                                     <tr>
-                                        <td>{{ $sitePage->id }}</td>
-                                        <td>
-                                            <a href="{{ $sitePage->getLink() }}">
-                                                {{ $sitePage->url }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            {{ $sitePage->layout }}
-                                        </td>
-                                        <td class="text-right">
-                                            <a title="{{ __('laracms::admin.edit') }}"
-                                               href="{{ route('laracms.pages.edit', $sitePage->id) }}"
-                                               rel="tooltip" class="btn btn-success btn-icon btn-sm ">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a title="{{ __('laracms::admin.delete') }}"
-                                               onclick="return confirm('{{ __('laracms::admin.sure_to_delete') }}')"
-                                               href="{{ route('laracms.pages.destroy', $sitePage->id) }}"
-                                               rel="tooltip" class="btn btn-danger btn-icon btn-sm ">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </td>
+                                        <th>#</th>
+                                        <th>{{ __('laracms::admin.url') }}</th>
+                                        <th>{{ __('laracms::admin.layout') }}</th>
+                                        <th>{{ __('laracms::admin.actions') }}</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            {{ $pages->links() }}
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($pages as $sitePage)
+                                        <tr>
+                                            <td>{{ $sitePage->id }}</td>
+                                            <td>
+                                                <a href="{{ $sitePage->getLink() }}">
+                                                    {{ $sitePage->url }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ $sitePage->layout }}
+                                            </td>
+                                            <td class="text-right">
+                                                <a title="{{ __('laracms::admin.edit') }}"
+                                                   href="{{ route('laracms.pages.edit', $sitePage->id) }}"
+                                                   rel="tooltip" class="btn btn-success btn-icon btn-sm ">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a title="{{ __('laracms::admin.delete') }}"
+                                                   onclick="return confirm('{{ __('laracms::admin.sure_to_delete') }}')"
+                                                   href="{{ route('laracms.pages.destroy', $sitePage->id) }}"
+                                                   rel="tooltip" class="btn btn-danger btn-icon btn-sm ">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                {{ $pages->links() }}
+                            </div>
+                        @else
+                            <blockquote>
+                                <p class="blockquote blockquote-primary">
+                                    {{ __('laracms::admin.no_records') }}
+                                </p>
+                            </blockquote>
+                        @endif
                     </div>
                 </div>
             </div>

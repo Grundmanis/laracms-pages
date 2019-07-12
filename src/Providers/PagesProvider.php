@@ -26,7 +26,7 @@ class PagesProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../laracms_pages_routes.php');
 
         $this->publishes([
-            __DIR__.'/../views/pages/' => resource_path('views/laracms/pages/'),
+            __DIR__.'/../views/' => resource_path('views/laracms/pages/'),
         ], 'laracms');
 
     }
