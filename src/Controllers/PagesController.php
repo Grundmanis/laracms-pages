@@ -67,6 +67,7 @@ class PagesController extends Controller
     public function edit(LaracmsPage $page)
     {
         $layouts = $this->layoutsLoader->load();
+
         return view('laracms.pages::form', compact('page', 'layouts'));
     }
 
