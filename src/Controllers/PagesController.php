@@ -62,7 +62,7 @@ class PagesController extends Controller
     {
         $this->page->create($request->all());
 
-        return redirect()->route('laracms.pages')->with('status', 'Page created!');
+        return redirect()->route('laracms.pages')->with('status', __('laracms::admin.page_created'));
     }
 
     /**
@@ -86,7 +86,7 @@ class PagesController extends Controller
     {
         $page->update($request->all());
 
-        return back()->with('status', 'Page updated!');
+        return back()->with('status', __('laracms::admin.page_updated'));
     }
 
     /**
@@ -97,6 +97,6 @@ class PagesController extends Controller
     {
         $page->delete();
 
-        return redirect()->route('laracms.pages')->with('status', 'Page deleted!');
+        return redirect()->route('laracms.pages')->with('status', __('laracms::admin.page_deleted'));
     }
 }
