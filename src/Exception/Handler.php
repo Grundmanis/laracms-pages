@@ -15,9 +15,10 @@ class Handler extends \App\Exceptions\Handler {
 
             if ($translation = LaracmsPageTranslation::where('url', $url)->first()) {
                 $page = $translation->page;
+                $text = $translation->text;
 
                 return response()
-                    ->view('laracms.pages.pages.index', compact('page'))
+                    ->view('laracms.pages.pages.index', compact('page', 'text'))
                     ->setStatusCode(200);
             }
         }

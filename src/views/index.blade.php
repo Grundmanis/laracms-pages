@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">{{ __('laracms::admin.laracms_users') }}</h4>
+                        <h4 class="card-title">{{ __('laracms::admin.menu.pages') }}</h4>
                     </div>
                     <div class="card-body">
                         @if (count($pages))
@@ -43,8 +43,8 @@
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a title="{{ __('laracms::admin.delete') }}"
-                                                   onclick="return confirm('{{ __('laracms::admin.sure_to_delete') }}')"
-                                                   href="{{ route('laracms.pages.destroy', $sitePage->id) }}"
+                                                   onclick="return confirmDelete('{{ route('laracms.pages.destroy', $sitePage->id) }}');"
+                                                   href="javascript:void(0);" type="button"
                                                    rel="tooltip" class="btn btn-danger btn-icon btn-sm ">
                                                     <i class="fa fa-times"></i>
                                                 </a>
