@@ -3,7 +3,8 @@
 Route::group([
     'middleware' => ['web', 'laracms.auth', 'laracms.language'],
     'namespace'  => 'Grundmanis\Laracms\Modules\Pages\Controllers',
-    'prefix'     => 'laracms/pages'
+    'prefix'     => config('laracms.prefix', 'laracms') . '/pages',
+    'domain'     => config('laracms.domain')
 ], function () {
     Route::get('/', 'PagesController@index')->name('laracms.pages');
     Route::get('/create', 'PagesController@create')->name('laracms.pages.create');
