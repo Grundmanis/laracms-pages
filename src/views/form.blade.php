@@ -1,9 +1,13 @@
 @extends(view()->exists('laracms.dashboard.layouts.app') ? 'laracms.dashboard.layouts.app' : 'laracms.dashboard::layouts.app', ['page' => __('laracms::admin.menu.pages')] )
 
-{{--@include('laracms.dashboard::partials.summernote')--}}
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.js"></script>
+@endsection
 
 @section('content')
-    <form method="post">
+
+<form method="post">
         {{ csrf_field() }}
 
         <div class="card">
@@ -11,11 +15,18 @@
                 <h4 class="card-title">{{ __('laracms::admin.menu.pages') }}</h4>
             </div>
             <div class="card-body">
+
                 <div class="form-group">
-                    <label for="slug">{{ __('laracms::admin.layout') }}<span>*</span></label>
+                    <label for="key">{{ __('laracms::admin.key') }}<span>*</span></label>
+                    <input class="form-control" value="{{ old('key', isset($page) ? $page->key : '') }}" type="text" name="key" id="key">
+                </div>
+
+                <div class="form-group">
+                    <label for="layout">{{ __('laracms::admin.layout') }}<span>*</span></label>
                     <select class="form-control" name="layout" id="layout">
                         @foreach($layouts as $layout)
-                            <option @if(formValue($page ?? null, 'layout') == $layout) selected
+                            <option @if(formValue($page ?? null, 'layout') == $layout)
+                                    selected
                                     @endif value="{{ $layout }}">
                                 {{ $layout }}
                             </option>
@@ -23,8 +34,49 @@
                     </select>
                     <small id="layout" class="form-text text-muted">
                         {{ __('laracms::admin.layout_description') }}
-                        {{--Layouts are located in <strong>resources/views/laracms/pages/layouts</strong>--}}
                     </small>
+                </div>
+
+                <div class="form-check mt-3">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="hidden" name="in_top_nav" value="0">
+                            <input name="in_top_nav" class="form-check-input" type="checkbox"
+                                   @if(old('in_top_nav', isset($page) ? $page->in_top_nav : 0)) checked @endif
+                                   value="1"
+                            >
+                            {{ __('laracms::admin.show_in_top_menu') }}
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-check mt-3">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="hidden" name="in_footer" value="0">
+                            <input name="in_footer" class="form-check-input" type="checkbox"
+                                   @if(old('in_footer', isset($page) ? $page->in_footer : 0)) checked @endif
+                                   value="1"
+                            >
+                            {{ __('laracms::admin.show_in_footer') }}
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-check mt-3">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="hidden" name="auth_only" value="0">
+                            <input name="auth_only" class="form-check-input" type="checkbox"
+                                   @if(old('auth_only', isset($page) ? $page->auth_only : 0)) checked @endif
+                                   value="1"
+                            >
+                            {{ __('laracms::admin.auth_only') }}
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="nav-tabs-navigation">
@@ -50,7 +102,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="">{{ __('laracms::admin.text') }}</label>
-                                <textarea class="form-control" name="{{ $locale }}[text]">{{ formValue($page ?? null, 'text', $locale) }}</textarea>
+                                <input value="{{ formValue($page ?? null, 'text', $locale) }}" id="text_{{ $locale }}" type="hidden" name="{{ $locale }}[text]">
+                                <trix-editor input="text_{{ $locale }}"></trix-editor>
                             </div>
                         </div>
                     @endforeach
@@ -59,5 +112,5 @@
         </div>
 
         <button type="submit" class="btn btn-primary">{{ __('laracms::admin.save') }}</button>
-    </form>
+</form>
 @endsection

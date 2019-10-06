@@ -10,7 +10,7 @@ class LaracmsPage extends Model
 
     public $translatedAttributes = ['text', 'url'];
 
-    protected $fillable = ['layout'];
+    protected $fillable = ['layout', 'key', 'in_footer', 'in_top_nav', 'auth_only'];
 
     /**
      * LaracmsPage constructor.

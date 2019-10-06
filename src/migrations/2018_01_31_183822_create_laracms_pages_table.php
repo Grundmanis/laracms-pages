@@ -24,7 +24,7 @@ class CreateLaracmsPagesTable extends Migration
             $table->increments('id');
             $table->integer('laracms_page_id')->unsigned();
             $table->longText('text');
-            $table->string('url')->unique();
+            $table->string('url');
             $table->string('locale')->index();
 
             $table->unique(['laracms_page_id','locale']);
