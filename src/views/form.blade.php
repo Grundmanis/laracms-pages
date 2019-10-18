@@ -91,7 +91,7 @@
                         </ul>
                     </div>
                 </div>
-                <div id="my-tab-content" class="tab-content text-center">
+                <div id="my-tab-content" class="tab-content">
                     @foreach($locales as $key => $locale)
                         <div class="tab-pane @if(!$key) active @endif" id="{{ $locale }}" role="tabpanel"
                              aria-expanded="true">
@@ -113,4 +113,79 @@
 
         <button type="submit" class="btn btn-primary">{{ __('laracms::admin.save') }}</button>
 </form>
+@endsection
+
+@section('scripts')
+    <script>
+        (function() {
+            var UPLOAD_HOST = "{{ route('laracms.pages.images') }}",
+                HOST = "{{ env('APP_URL') }}/storage/uploads/";
+
+            addEventListener("trix-attachment-add", function(event) {
+                if (event.attachment.file) {
+                    uploadFileAttachment(event.attachment)
+                }
+            })
+
+            function uploadFileAttachment(attachment) {
+                uploadFile(attachment.file, setProgress, setAttributes)
+
+                function setProgress(progress) {
+                    attachment.setUploadProgress(progress)
+                }
+
+                function setAttributes(attributes) {
+                    attachment.setAttributes(attributes)
+                }
+            }
+
+            function uploadFile(file, progressCallback, successCallback) {
+                var key = createStorageKey(file)
+                var formData = createFormData(key, file)
+                var xhr = new XMLHttpRequest()
+
+                xhr.open("POST", UPLOAD_HOST, true)
+
+                xhr.upload.addEventListener("progress", function(event) {
+                    console.log('progress');
+                    var progress = event.loaded / event.total * 100
+                    progressCallback(progress)
+                })
+
+                xhr.addEventListener("load", function(event) {
+                    console.log('load');
+                    console.log(xhr.status);
+                    console.log('key', key);
+
+                    if (xhr.status == 204) {
+                        var attributes = {
+                            url: HOST + key,
+                            href: HOST + key + "?content-disposition=attachment"
+                        }
+                        successCallback(attributes)
+                    }
+                })
+
+                xhr.setRequestHeader('X-CSRF-TOKEN', "{{ csrf_token() }}");
+                xhr.send(formData)
+            }
+
+            function createStorageKey(file) {
+                var date = new Date()
+                var day = date.toISOString().slice(0,10)
+                var name = date.getTime();
+                return file.name;
+                return [file.name].join("/")
+            }
+
+            function createFormData(key, file) {
+                var data = new FormData()
+                data.append("key", key)
+                data.append("name", file.name)
+                data.append("Content-Type", file.type)
+                data.append("file", file)
+                return data
+            }
+        })();
+    </script>
 @endsection

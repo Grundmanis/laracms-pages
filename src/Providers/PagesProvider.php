@@ -16,10 +16,10 @@ class PagesProvider extends ServiceProvider
     public function boot()
     {
         // Rewrites the default error handler
-        App::singleton(
-            \App\Exceptions\Handler::class,
-            Handler::class
-        );
+//        App::singleton(
+//            \App\Exceptions\Handler::class,
+//            Handler::class
+//        );
 
         $this->loadViewsFrom(__DIR__ . '/../views', 'laracms.pages');
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');

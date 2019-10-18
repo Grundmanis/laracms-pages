@@ -7,6 +7,7 @@ use Grundmanis\Laracms\Modules\Pages\LayoutsLoader;
 use Grundmanis\Laracms\Modules\Pages\Models\LaracmsPage;
 use Grundmanis\Laracms\Modules\Pages\Requests\PageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PagesController extends Controller
 {
@@ -98,5 +99,15 @@ class PagesController extends Controller
         $page->delete();
 
         return redirect()->route('laracms.pages')->with('status', __('laracms::admin.page_deleted'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function images(Request $request)
+    {
+        $request->file->storeAs('public/uploads', $request->key);
+        return response(null, 204);
     }
 }
