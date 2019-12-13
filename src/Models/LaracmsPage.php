@@ -26,6 +26,6 @@ class LaracmsPage extends Model
      */
     public function getLink()
     {
-        return request()->root() . '/' . $this->url;
+        return env('APP_URL') . '/' . $this->url;
     }
 }
